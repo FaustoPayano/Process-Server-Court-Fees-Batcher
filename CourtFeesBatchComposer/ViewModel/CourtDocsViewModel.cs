@@ -16,6 +16,7 @@ namespace CourtFeesBatchComposer.ViewModel {
         private string[] _fileDirectoryPath;
         private string _fileBeingProcessed;
         private string _mainDirectory;
+
  
     
         public CourtDocsViewModel(string[] batchFilesDirectoryPaths) {

@@ -8,7 +8,8 @@ using OfficeOpenXml;
 
 namespace CourtFeesBatchComposer.ExcelFunctions {
     class ExcelHelper {
-        private static ExcelWorksheet CreateExcelSheet(ExcelPackage package, string workSheetName) {
+        
+        public static ExcelWorksheet CreateExcelSheet(ExcelPackage package, string workSheetName) {
             package.Workbook.Worksheets.Add(workSheetName);
             ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
             workSheet.Name = workSheetName;

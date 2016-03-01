@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <MenuItem Header="_File">
-                <MenuItem Header="_Exit"/>
+                <MenuItem Header="_Exit" Click="ExitApplication"/>
             </MenuItem>
             <MenuItem Header="_Options">
             </MenuItem>
@@ -36,7 +36,7 @@
             </Border>
         </StackPanel>
         <ListBox Name="CourtFeeListBox" MouseDoubleClick="CourtFeeListBox_OnMouseDoubleClick" Grid.Row="2" Grid.Column="1" MaxHeight="300"/>
-        <Button Grid.Row="1" Grid.Column="2" MaxWidth="100" VerticalAlignment="Center" VerticalContentAlignment="Center">
+        <Button Grid.Row="1" Grid.Column="2" MaxWidth="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Click="GenerateExcel">
             <Label>Generate Excel</Label>
         </Button>
     </Grid>
