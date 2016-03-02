@@ -72,7 +72,7 @@ namespace CourtFeesBatchComposer {
                 ) {
                 ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Process Server Court Fees");
                 foreach (var file in courtDocs.BatchedCourtFeesFiles) {
-                    worksheet.Cells["A1"].LoadFromCollection(file.CourtFees, true);
+                    worksheet.Cells["A1"].LoadFromDataTable(GetInDataTableFormat(), true);
                     excelPackage.Save();
                 }
             }
@@ -82,7 +82,7 @@ namespace CourtFeesBatchComposer {
         private DataTable GetInDataTableFormat() {
             DataTable tempTable = new DataTable();
             tempTable.Columns.Add("Defendant", typeof (string));
-            tempTable.Columns.Add("IndexNumber", typeof(int));
+            tempTable.Columns.Add("IndexNumber", typeof(string));
             tempTable.Columns.Add("MatterNumber", typeof(string));
             tempTable.Columns.Add("CourtFee", typeof(decimal));
             tempTable.Columns.Add("InvoiceNumber", typeof(int));
@@ -94,7 +94,7 @@ namespace CourtFeesBatchComposer {
                         entry.InvoiceNumber, file.CourtDate);
                 }
             }
-            return null;
+            return tempTable;
         }
 
     }

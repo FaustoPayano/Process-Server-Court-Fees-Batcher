@@ -12,7 +12,7 @@ using System.Windows;
 namespace CourtFeesBatchComposer.Model {
     public class CourtFeesFile {
         public List<CourtFeesObject> CourtFees = new List<CourtFeesObject>();
-        private string CourtDate { get; set; }
+        public string CourtDate { get; set; }
         public FileInfo CourtFeeFileInfo { get; set; }
         public string FileName { get; set; }
         private int NumberofRecords { get; set; }
@@ -61,10 +61,9 @@ namespace CourtFeesBatchComposer.Model {
             
             
             string defendant = courtFeeInfo[0];
+            string indexNumber = courtFeeInfo[1];
             string matterNumber = courtFeeInfo[2];
 
-            int indexNumber;
-            int.TryParse(courtFeeInfo[1], out indexNumber);
             decimal courtFee;
             decimal.TryParse(courtFeeInfo[3], out courtFee);
             int invoiceNum;
