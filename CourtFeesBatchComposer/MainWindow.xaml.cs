@@ -20,6 +20,7 @@ namespace CourtFeesBatchComposer {
 
     public partial class MainWindow : Window {
         private CourtDocsViewModel courtDocs;
+        private DataTable courtFeesDataTable;
 
         public MainWindow() {
             InitializeComponent();
@@ -68,17 +69,18 @@ namespace CourtFeesBatchComposer {
         private void ExcelCreate() {
             using (
                 var excelPackage =
-                    new ExcelPackage(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fracktest.xlsx")))
+                    new ExcelPackage(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{DateTime.Now.ToShortDateString()}- CourtFees.xlsx")))
                 ) {
                 ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Process Server Court Fees");
                 foreach (var file in courtDocs.BatchedCourtFeesFiles) {
                     worksheet.Cells["A1"].LoadFromDataTable(GetInDataTableFormat(), true);
-                    excelPackage.Save();
+                    
                 }
+                excelPackage.Save();
             }
         }
 
-
+        //Move to Helper Class
         private DataTable GetInDataTableFormat() {
             DataTable tempTable = new DataTable();
             tempTable.Columns.Add("Defendant", typeof (string));
@@ -94,8 +96,27 @@ namespace CourtFeesBatchComposer {
                         entry.InvoiceNumber, file.CourtDate);
                 }
             }
+            courtFeesDataTable = tempTable;
             return tempTable;
         }
 
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e) {
+            try {
+                var generateWinxfer = new Task(new Action(GenerateWinxferFile));
+            }
+            catch (Exception ex) {
+                throw;
+            }
+        }
+
+        private void GenerateWinxferFile() {
+            DataView view = new DataView(courtFeesDataTable);
+            DataTable onlyMatterNumbers = view.ToTable(false, "MatterNumber");
+            using (var streamwriter = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{DateTime.Now.ToShortDateString()} CourtFeeMatterNumbers.txt"))) {
+                foreach (var row in onlyMatterNumbers.Rows) {
+                    streamwriter.WriteLine(row);
+                }
+            }
+        }
     }
 }

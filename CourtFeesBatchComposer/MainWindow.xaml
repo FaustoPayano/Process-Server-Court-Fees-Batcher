@@ -24,6 +24,7 @@
                 <MenuItem Header="_Exit" Click="ExitApplication"/>
             </MenuItem>
             <MenuItem Header="_Options">
+                <MenuItem Header="Generate Winxfer File"  Click="MenuItem_OnClick"/>
             </MenuItem>
             <MenuItem Header="_About">
                 
