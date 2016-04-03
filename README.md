@@ -6,7 +6,7 @@ This is one of various programs designed to increase the efficiency of some dail
 Each file opened in the listbox can be clicked to open up its corresponding court fee file.
 
 #Images:
-![alt text](http://imgur.com/gjl1wkF "Court Fee Sample Image")
+![alt text](http://i.imgur.com/gjl1wkF.png "Court Fee Sample Image")
 
 
 #License
