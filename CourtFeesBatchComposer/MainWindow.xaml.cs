@@ -48,6 +48,7 @@ namespace CourtFeesBatchComposer {
         private void EstablishViewModel(object sender, DoWorkEventArgs e) {
             courtDocs = new CourtDocsViewModel(e.Argument as string[]);
             courtDocs.BatchedCourtFeesFiles = courtDocs.BatchTogetherCourtFeeFiles();
+            courtFeesDataTable = GetInDataTableFormat();
         }
 
         private void CourtFeeListBox_OnMouseDoubleClick(object sender, MouseButtonEventArgs e) {
@@ -67,9 +68,10 @@ namespace CourtFeesBatchComposer {
         }
 
         private void ExcelCreate() {
+            
             using (
                 var excelPackage =
-                    new ExcelPackage(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{DateTime.Now.ToShortDateString()}- CourtFees.xlsx")))
+                    new ExcelPackage(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Output - Fees.xlsx")))
                 ) {
                 ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Process Server Court Fees");
                 foreach (var file in courtDocs.BatchedCourtFeesFiles) {
@@ -103,18 +105,19 @@ namespace CourtFeesBatchComposer {
         private void MenuItem_OnClick(object sender, RoutedEventArgs e) {
             try {
                 var generateWinxfer = new Task(new Action(GenerateWinxferFile));
+                generateWinxfer.Start();
             }
             catch (Exception ex) {
-                throw;
+                MessageBox.Show("Error");
             }
         }
 
         private void GenerateWinxferFile() {
             DataView view = new DataView(courtFeesDataTable);
             DataTable onlyMatterNumbers = view.ToTable(false, "MatterNumber");
-            using (var streamwriter = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{DateTime.Now.ToShortDateString()} CourtFeeMatterNumbers.txt"))) {
-                foreach (var row in onlyMatterNumbers.Rows) {
-                    streamwriter.WriteLine(row);
+            using (var streamwriter = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CourtFeeMatterNumbers.txt"), false)) {
+                foreach (DataRow row in onlyMatterNumbers.Rows) {
+                    streamwriter.WriteLine(row["MatterNumber"].ToString());
                 }
             }
         }
