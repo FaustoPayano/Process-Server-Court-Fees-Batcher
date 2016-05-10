@@ -68,12 +68,16 @@ namespace CourtFeesBatchComposer.Model {
             decimal.TryParse(courtFeeInfo[3], out courtFee);
             int invoiceNum;
             int.TryParse(courtFeeInfo[4], out invoiceNum);
+            // DateTime is provided in the following format  - YYYY-mm-DD
+            DateTime dateCompleted = DateTime.ParseExact(courtFeeInfo[5], "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
                          
             return new CourtFeesObject() {Defendant = defendant,
                 IndexNumber = indexNumber,
                 MatterNumber = matterNumber,
                 CourtFee = courtFee,
-                InvoiceNumber = invoiceNum};
+                InvoiceNumber = invoiceNum,
+                DateCompleted = dateCompleted
+            };
         }
 
         public override string ToString() {
