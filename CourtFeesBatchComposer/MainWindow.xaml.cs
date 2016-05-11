@@ -91,6 +91,7 @@ namespace CourtFeesBatchComposer {
             tempTable.Columns.Add("CourtFee", typeof(decimal));
             tempTable.Columns.Add("InvoiceNumber", typeof(int));
             tempTable.Columns.Add("ProcessServerFileDate", typeof (string));
+            tempTable.Columns.Add("DateCompleted", typeof (DateTime));
 
             foreach (var file in courtDocs.BatchedCourtFeesFiles) {
                 foreach (var entry in file.CourtFees) {

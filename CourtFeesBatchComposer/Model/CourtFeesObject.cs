@@ -12,5 +12,6 @@ namespace CourtFeesBatchComposer.Model {
         public string MatterNumber { get; set; }
         public decimal CourtFee { get; set; }
         public int InvoiceNumber { get; set; }
+        public DateTime DateCompleted { get; set; }
     }
 }
