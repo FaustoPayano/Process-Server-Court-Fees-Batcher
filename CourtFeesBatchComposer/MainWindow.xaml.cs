@@ -96,7 +96,7 @@ namespace CourtFeesBatchComposer {
             foreach (var file in courtDocs.BatchedCourtFeesFiles) {
                 foreach (var entry in file.CourtFees) {
                     tempTable.Rows.Add(entry.Defendant, entry.IndexNumber, entry.MatterNumber, entry.CourtFee,
-                        entry.InvoiceNumber, file.CourtDate);
+                        entry.InvoiceNumber, file.CourtDate, entry.DateCompleted);
                 }
             }
             courtFeesDataTable = tempTable;
